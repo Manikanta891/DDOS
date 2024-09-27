@@ -17,11 +17,12 @@ const App = () => {
     "DoS Attack Count": 0,
     "DDoS Attack Count": 0,
     "DDoS Bot Traffic Count": 0,
-    "Normal IPs":[],
+    "Normal IPs": [],
     "DoS IPs": [],
     "DDoS IPs": [],
     "DDoS Bot IPs": []
   });
+  
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
 
@@ -59,7 +60,7 @@ const App = () => {
         "DoS Attack Count": 0,
         "DDoS Attack Count": 0,
         "DDoS Bot Traffic Count": 0,
-        "Normal IPs":[],
+        "Normal IPs": [],
         "DoS IPs": [],
         "DDoS IPs": [],
         "DDoS Bot IPs": []
@@ -86,7 +87,7 @@ const App = () => {
     labels: ['Normal Traffic', 'DoS Attacks', 'DDoS Attacks', 'DDoS Bot Traffic'],
     datasets: [
       {
-        label: '# of Packets',
+        label: ' of Packets',
         data: [
           result["Normal Traffic Count"],
           result["DoS Attack Count"],
@@ -101,19 +102,22 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>DDoS Detection System</h1>
+      <center><h1>DDoS Detection System</h1></center>
+      <br />
   
       {/* Network Traffic Section */}
       <div className="network-traffic">
         <h2>Network Traffic</h2>
-        <button onClick={handleStartClick}>Start DDoS Detection</button>
-        <button onClick={handleStopClick} disabled={!isRunning}>Stop DDoS Detection</button>
+        <hr />
+        <button onClick={handleStartClick}>Start Traffic Detection</button>
+        <button onClick={handleStopClick} disabled={!isRunning}>Stop Traffic Detection</button>
         <button onClick={handleResetClick} disabled={isRunning}>Reset</button>
       </div>
   
       {/* Intrusion Detection System Section */}
       <div className="intrusion-detection">
         <h2>Intrusion Detection System</h2>
+        <hr />
         <p><strong>Normal Traffic Count:</strong> {result["Normal Traffic Count"]}</p>
         <p><strong>DoS Attack Count:</strong> {result["DoS Attack Count"]}</p>
         <p><strong>DDoS Attack Count:</strong> {result["DDoS Attack Count"]}</p>
@@ -126,30 +130,51 @@ const App = () => {
   
       {/* Intrusion Prevention System Section */}
       <div className="intrusion-prevention">
-        <div className="prevention-container">
+      <h2>Intrusion Prevention System</h2>
+      <hr />
+      <div className="prevention-container-c">
           <h3>Allowed IP Addresses</h3>
-          <p>Allowed all packets from {result["Normal IPs"].length > 0 ? result["Normal IPs"].join(', ') : 'None'}</p>
+          {result["Normal IPs"].length > 0 
+            ? result["Normal IPs"].map(ip => (
+                <p key={ip}>Allowed all packets from: {ip}</p>
+              ))
+            : <p>No packet is allowed.</p>
+          }
         </div>
-        <div className="prevention-container">
+
+
+        <div className="prevention-container-b">
           <h3>Blocked IP Addresses</h3>
-          <p>Blocked all packets from {[...result["DoS IPs"], ...result["DDoS IPs"]].length > 0 ? [...result["DoS IPs"], ...result["DDoS IPs"]].join(', ') : 'None'}</p>
+          {([...result["DoS IPs"], ...result["DDoS IPs"]].length > 0)
+            ? [...result["DoS IPs"], ...result["DDoS IPs"]].map(ip => (
+                <p key={ip}>Blocked all packets from: {ip}</p>
+              ))
+            : <p>No packet is blocked.</p>
+          }
         </div>
-        <div className="prevention-container">
+
+        <div className="prevention-container-c">
           <h3>Delayed IP Addresses</h3>
-          <p>Delayed all packets from {result["DDoS Bot IPs"].length > 0 ? result["DDoS Bot IPs"].join(', ') : 'None'}</p>
+          {result["DDoS Bot IPs"].length > 0 
+            ? result["DDoS Bot IPs"].map(ip => (
+                <p key={ip}>Delayed all packets from: {ip}</p>
+              ))
+            : <p>No packet is delayed.</p>
+          }
         </div>
-      </div>
-  
+        </div>
+
+
       {/* Traffic Distribution Section */}
       <div className="traffic-distribution">
         <h3>Traffic Distribution</h3>
+        <hr />
         <div className="chart-container">
           <Pie data={pieData} />
         </div>
       </div>
     </div>
   );
-  
 };
 
 export default App;
