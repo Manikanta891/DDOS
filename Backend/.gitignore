@@ -1,0 +1,12 @@
+# Ignore Python-specific files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment
+venv/
+.env
+
+# Ignore Flask-related files
+instance/
