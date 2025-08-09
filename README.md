@@ -29,7 +29,7 @@ This project presents a **Machine Learning-powered Intrusion Detection System (I
    - Important headers and payload patterns are extracted (IP, protocol, packet size, flags, etc.)
 
 3. 🧠 **ML-based IDS Prediction**  
-   - A pre-trained ML model (Random Forest / SVM / XGBoost) classifies traffic as **normal** or **abnormal**.
+   - A pre-trained ML model (Random Forest) classifies traffic as **normal** or **abnormal**.
 
 4. 🚫 **Action Triggered (IPS)**  
    - If traffic is abnormal, block rules are triggered via firewall/iptables.
